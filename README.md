@@ -619,11 +619,3 @@ The goal is to make FileWall development **easier, clearer, and more maintainabl
 
 ---
 
-If you want, I can also show you **3 extremely powerful improvements** that mature engineering teams add to documentation systems like this:
-
-* **searchable index system**
-* **automatic table of contents generator**
-* **architecture decision record format**
-
-Those three make documentation **10× easier to navigate** once the project grows.
-
