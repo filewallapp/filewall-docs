@@ -119,6 +119,7 @@ FileWall is a web-based application built using:
 
 * File upload and storage
 * Preview generation
+* Revision control and monetization
 * Secure link sharing
 * Payment processing
 * Access control
@@ -132,6 +133,8 @@ FileWall is a web-based application built using:
 ### Creator
 * Upload files
 * Set pricing
+* Set maximum revision limits for each file
+* Define cost for additional revisions beyond limit
 * Share links
 * Track payments
 * View client reviews
@@ -156,6 +159,9 @@ Allows creators to upload files to the system.
 ### Functional Requirements
 * Upload file
 * Validate file type/size
+* Allow creator to set maximum number of revisions per file
+* Allow creator to optionally define time-based revision limits
+* Allow creator to set price for additional revisions beyond allowed limit
 * Store securely
 * Generate unique ID
 
@@ -260,7 +266,9 @@ Allows creators to view their monthly earnings, most valuable client, payments r
 * Dislay payment history
 * Display pending payments
 * Display expired file sharing links
-* Display file expiry date and revisions left.
+* Display file expiry date and revisions left
+* Display revision usage per client/project
+* Display additional revenue generated from extra revisions
 * Display current month usage of FileWall
     * Number of files uploaded per month
     * Storage left
@@ -284,6 +292,21 @@ Allows creators to convert reviews into shareable testimonials.
 * Generate shareable image/card
 * Export for social media (LinkedIn, Instagram, etc.)
 * Ensure consent before public usage
+
+## 3.11 Revision Management System
+
+### Description
+Allows creators to control and limit the number of revision requests made by clients and optionally monetize additional revisions.
+
+### Functional Requirements
+* Allow creators to define maximum number of revisions per file
+* Allow creators to define time-based revision windows (optional)
+* Track number of revisions used by client
+* Display remaining revisions to client in UI
+* Prevent further revision requests after limit is reached
+* Provide option for client to purchase additional revisions
+* Allow creators to set pricing for extra revisions
+* Notify both creator and client when revision limit is reached
 
 ---
 
@@ -320,6 +343,7 @@ Allows creators to convert reviews into shareable testimonials.
 * Signed URLs
 * Access validation
 * Payment verification
+* Prevent abuse of revision system through rate limiting and validation
 
 ## 5.2 Performance
 
@@ -386,6 +410,13 @@ Client → Request → Validate → Signed URL → Download
 ## 7.4 Review Flow
 
 Client → Download → Review Prompt → Submit → Store → Dashboard Display
+
+## 7.4 Revision Flow
+
+Client → Submit revision request → System validates remaining revisions → 
+IF within limit → Allow request → Notify creator  
+IF limit exceeded → Prompt payment for additional revision → 
+Payment success → Allow additional revision request
 
 ---
 
