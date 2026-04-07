@@ -387,7 +387,7 @@ export async function POST(req: Request) {
 * Keep repository layer clean and consistent
 * Don’t overuse ORM for complex queries
 * Prioritize clarity over abstraction
-* `CREATE SCHEMA filewall;` to create custom schema
+* `CREATE SCHEMA mitfloww;` to create custom schema
 * Run drizzle migration using:
     * `npx drizzle-kit generate`
     * `npx drizzle-kit push`

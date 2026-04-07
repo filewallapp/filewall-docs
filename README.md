@@ -1,6 +1,6 @@
-## FileWall Documentation
+## MitFloww Documentation
 
-This repository is the **central knowledge base** for the FileWall platform.
+This repository is the **central knowledge base** for the MitFloww platform.
 
 It contains documentation about:
 
@@ -25,7 +25,7 @@ The documentation is organized into topic-based folders so developers can easily
 # Documentation Structure
 
 ```
-filewall-doc
+mitfloww-doc
 │
 ├─ architecture
 ├─ business
@@ -96,7 +96,7 @@ Example topics:
 
 ## business
 
-Documents **core business rules of FileWall**.
+Documents **core business rules of MitFloww**.
 
 These rules must remain valid even if the technology changes.
 
@@ -104,7 +104,7 @@ Files:
 
 **core-business-model.md**
 
-Describes the core business idea behind FileWall.
+Describes the core business idea behind MitFloww.
 
 Example topics:
 
@@ -646,6 +646,6 @@ This repository ensures that:
 * onboarding becomes faster
 * recurring problems are avoided
 
-The goal is to make FileWall development **easier, clearer, and more maintainable over time**.
+The goal is to make MitFloww development **easier, clearer, and more maintainable over time**.
 
 ---

@@ -1,6 +1,6 @@
 # Software Requirements Specification (SRS)
 
-## FileWall – Secure File Delivery Platform
+## MitFloww – Secure File Delivery Platform
 
 ---
 
@@ -74,11 +74,11 @@
 
 ## 1.1 Purpose
 
-This document describes the functional and non-functional requirements for **FileWall**, a platform that enables creators to securely share files with clients and ensure access is granted only after successful payment.
+This document describes the functional and non-functional requirements for **MitFloww**, a platform that enables creators to securely share files with clients and ensure access is granted only after successful payment.
 
 ## 1.2 Scope
 
-FileWall allows:
+MitFloww allows:
 
 * Creators to upload files
 * Generate preview versions
@@ -110,7 +110,7 @@ The system focuses on **secure delivery, payment assurance, controlled access, a
 
 ## 2.1 Product Perspective
 
-FileWall is a web-based application built using:
+MitFloww is a web-based application built using:
 
 * Frontend + Backend: Next.js
 * DB: Postgres
