@@ -1,0 +1,308 @@
+# File Lifecycle Rules
+
+## Overview
+
+Mitfloww is **not a cloud storage platform**.
+
+It is a **secure file delivery platform** where files only exist for the duration required to complete the creator-client workflow.
+
+The storage system is designed around **temporary retention**, minimizing storage costs while ensuring creators can securely deliver files to clients.
+
+The guiding principle is:
+
+> **Store files only for as long as they are required by the workflow.**
+
+---
+
+# Lifecycle Principles
+
+## Canonical Files
+
+Canonical files are files that cannot be regenerated.
+
+Examples:
+
+- Final draft original
+- Purchased deliverable
+
+Canonical files are retained only for the configured retention period of the creator's plan.
+
+---
+
+## Derived Files
+
+Derived files can always be regenerated from an original (when applicable).
+
+Examples:
+
+- Watermarked previews
+- 360p videos
+- WebP previews
+- Thumbnails
+- Generated testimonials
+
+These files should never be kept longer than necessary.
+
+---
+
+## Temporary Files
+
+Temporary files exist only while processing.
+
+Examples:
+
+- FFmpeg intermediate outputs
+- Download cache
+- Image conversion cache
+- Temporary uploads
+
+Temporary files must always be deleted after processing completes, regardless of success or failure.
+
+---
+
+# Revision Workflow
+
+## Upload
+
+Creator uploads a revision file.
+
+```
+Creator Upload
+       │
+       ▼
+Original Uploaded
+```
+
+---
+
+## Processing
+
+Worker generates a review version.
+
+Examples:
+
+- Images → WebP + Watermark
+- Videos → 360p + Watermark
+- PDFs → Watermarked preview
+
+```
+Original
+      │
+      ▼
+Worker
+      │
+      ▼
+Preview Generated
+```
+
+---
+
+## Cleanup
+
+After the preview is successfully generated:
+
+- Delete the uploaded original immediately.
+- Keep only the generated preview.
+
+```
+Original
+      │
+      ▼
+Preview Generated
+      │
+      ▼
+Delete Original
+```
+
+### Reason
+
+Revision files exist only for review and approval.
+
+The original quality is never required during the revision phase.
+
+---
+
+# Final Draft Workflow
+
+## Upload
+
+When the creator uploads the approved final draft:
+
+Store:
+
+- Original file
+- Preview version
+
+```
+Final Upload
+      │
+      ├── Original
+      └── Preview
+```
+
+Unlike revisions, the original file is retained because it will become the purchased deliverable.
+
+---
+
+## Payment
+
+After successful payment:
+
+- Client receives the original file.
+- Preview file is no longer required.
+
+```
+Payment Success
+      │
+      ▼
+Deliver Original
+      │
+      ▼
+Delete Preview
+```
+
+---
+
+## Retention Period
+
+The original file is retained only for the plan's configured retention period.
+
+Example:
+
+- Free → 3 days
+- Pro → 30 days
+- Business → 90 days
+
+(Actual values depend on the subscription plan.)
+
+---
+
+## Expiry
+
+After the retention period expires:
+
+```
+Original
+      │
+      ▼
+Delete Permanently
+```
+
+No creator files should remain after expiry.
+
+Mitfloww is not intended to provide permanent storage.
+
+---
+
+# Project Completion
+
+When a project reaches completion:
+
+- Old revision previews should not remain.
+- Previous revision assets should be deleted.
+- Only the active final draft remains until expiry.
+
+```
+Revision 1
+Revision 2
+Revision 3
+      │
+      ▼
+Final Approved
+      │
+      ▼
+Delete All Revisions
+```
+
+---
+
+# Processing Failures
+
+If processing fails:
+
+- Keep the original temporarily.
+- Mark the job as failed.
+- Allow retry.
+- Delete temporary processing files.
+
+Never delete the original before a preview has been successfully generated.
+
+---
+
+# Temporary Files
+
+Temporary directories should never accumulate files.
+
+Examples:
+
+```
+/storage/temp
+/storage/cache
+/storage/processing
+```
+
+Every completed or failed job must clean up its temporary files.
+
+---
+
+# Scheduled Cleanup Jobs
+
+A scheduled cleanup worker should periodically enforce lifecycle rules.
+
+Responsibilities include:
+
+- Delete expired originals.
+- Delete processed previews after payment.
+- Delete obsolete revision previews.
+- Delete abandoned temporary files.
+- Delete orphaned files not referenced by the database.
+- Delete database records whose lifecycle has ended.
+
+The cleanup worker acts as the final safety net to ensure storage remains consistent, even if individual jobs or requests fail.
+
+---
+
+# Storage Philosophy
+
+Mitfloww follows a **workflow-first** storage strategy.
+
+```
+Upload
+    │
+    ▼
+Process
+    │
+    ▼
+Review
+    │
+    ▼
+Approve
+    │
+    ▼
+Deliver
+    │
+    ▼
+Expire
+    │
+    ▼
+Delete
+```
+
+Unlike cloud storage platforms, Mitfloww intentionally removes files once they have fulfilled their purpose.
+
+This minimizes infrastructure costs, reduces long-term storage requirements, and keeps the platform focused on secure file delivery rather than permanent file hosting.
+
+---
+
+# Key Rules
+
+| Rule | Description |
+|------|-------------|
+| Revision originals | Delete immediately after successful preview generation |
+| Revision previews | Keep only until replaced, completed, or expired |
+| Final original | Keep until plan retention expires |
+| Final preview | Delete immediately after successful payment and delivery |
+| Temporary files | Delete after every job (success or failure) |
+| Failed processing | Never delete original until preview generation succeeds |
+| Cleanup worker | Periodically enforce lifecycle rules and remove expired/orphaned files |
+| Storage goal | Temporary secure delivery, **not** permanent cloud storage |
